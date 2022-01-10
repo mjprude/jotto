@@ -1,0 +1,16 @@
+.LetterInput {
+  border: 3px solid #3a3a3c;
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  line-height: 2rem;
+  font-weight: bold;
+  vertical-align: middle;
+  box-sizing: border-box;
+  color: #d7dadc;
+  text-transform: uppercase;
+  user-select: none;
+  aspect-ratio: 1;
+}
