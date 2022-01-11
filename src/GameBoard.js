@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useMemo, useCallback, useEffect, useState } from "react";
 import "./GameBoard.css";
 import LetterInput from "./LetterInput";
 import completeWordList from "./complete-word-list";
+import solutionWordList from "./solution-word-list";
 
 const WORD_LENGTH = 5;
 const MAX_GUESSES = 6;
@@ -46,6 +47,7 @@ function GameBoard() {
   const [gameOver, setGameOver] = useState(false);
   const [turn, setTurn] = useState(0);
   const [activeColumn, setActiveColumn] = useState(0);
+  const startTime = useMemo(() => Date.now(), [gameOver]);
   const emptyBoard = [...Array(MAX_GUESSES)].map(() =>
     [...Array(WORD_LENGTH)].map(() => ({ value: "" }))
   );
@@ -87,19 +89,20 @@ function GameBoard() {
           return;
         }
         const newGameState = [...gameState];
-        const result = makeGuess(guess, ANSWER);
+        const answer = solutionWordList[startTime % solutionWordList.length];
+        const result = makeGuess(guess, answer);
         newGameState[turn] = result;
         setGameState(newGameState);
         if (
           result.every(({ matchType }) => matchType === MATCH_TYPES.inPosition)
         ) {
           setGameOver(true);
-          setTimeout(() => alert("YOU WIN!", ANSWER), 500);
+          setTimeout(() => alert("YOU WIN!", answer), 500);
           return;
         }
         if (turn === MAX_GUESSES - 1) {
           setGameOver(true);
-          setTimeout(() => alert("YOU LOSE!", ANSWER), 500);
+          setTimeout(() => alert("YOU LOSE!", answer), 500);
           return;
         }
         setActiveColumn(0);
