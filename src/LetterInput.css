@@ -14,3 +14,18 @@
   user-select: none;
   aspect-ratio: 1;
 }
+
+.in-position {
+  border: none;
+  background-color: #538d4e;
+}
+
+.in-word {
+  border: none;
+  background-color: #b59f3b;
+}
+
+.incorrect {
+  border: none;
+  background-color: #3a3a3c;
+}

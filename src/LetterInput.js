@@ -1,7 +1,8 @@
 import "./LetterInput.css";
 
 function LetterInput(props) {
-  return <div className="LetterInput">{props.children}</div>;
+  const { children, matchType = "" } = props;
+  return <div className={`LetterInput ${matchType}`}>{children}</div>;
 }
 
 export default LetterInput;
