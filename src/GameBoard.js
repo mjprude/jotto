@@ -6,7 +6,6 @@ import solutionWordList from "./solution-word-list";
 
 const WORD_LENGTH = 5;
 const MAX_GUESSES = 6;
-const ANSWER = "shape";
 const MATCH_TYPES = {
   inPosition: "in-position",
   inWord: "in-word",
@@ -127,7 +126,7 @@ function GameBoard() {
         setActiveColumn(Math.max(activeColumn - 1, 0));
       }
     },
-    [gameOver, gameState, activeColumn, turn]
+    [gameState, activeColumn, turn, currentSolution, gameOver]
   );
 
   useEffect(() => {
@@ -144,7 +143,6 @@ function GameBoard() {
               matchType={matchType}
               selected={turn === i && activeColumn === j}
               key={`R${i}C${j}`}
-              onClick={() => handleClickInput([i, j])}
             >
               {value}
             </LetterInput>
