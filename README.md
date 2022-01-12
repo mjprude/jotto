@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Jotto
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A clone of https://www.powerlanguage.co.uk/wordle/, with a few small differences.
 
 ## Available Scripts
 
