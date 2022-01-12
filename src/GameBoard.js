@@ -47,6 +47,7 @@ function GameBoard() {
   const [gameOver, setGameOver] = useState(false);
   const [turn, setTurn] = useState(0);
   const [activeColumn, setActiveColumn] = useState(0);
+
   const startTime = useMemo(() => Date.now(), [gameOver]);
   const emptyBoard = [...Array(MAX_GUESSES)].map(() =>
     [...Array(WORD_LENGTH)].map(() => ({ value: "" }))
@@ -62,6 +63,11 @@ function GameBoard() {
     return [true, ""];
   };
 
+  const currentSolution = useMemo(
+    () => window.btoa(solutionWordList[startTime % solutionWordList.length]), // Todo: improve this encryption a little;
+    [startTime]
+  );
+
   const handleKeydown = useCallback(
     ({ key }) => {
       if (gameOver) {
@@ -69,13 +75,13 @@ function GameBoard() {
       }
       if (key === "Backspace") {
         const newGameState = [...gameState];
-        const cursorAtEnd =
-          activeColumn === WORD_LENGTH - 1 &&
-          gameState[turn][activeColumn].value;
-        const columnToDelete = cursorAtEnd ? activeColumn : activeColumn - 1;
+        const letterUnderCursor = gameState[turn][activeColumn].value;
+        const columnToDelete = letterUnderCursor
+          ? activeColumn
+          : activeColumn - 1;
         newGameState[turn][columnToDelete].value = "";
         setGameState(newGameState);
-        if (!cursorAtEnd) {
+        if (!letterUnderCursor) {
           setActiveColumn(Math.max(activeColumn - 1, 0));
         }
       }
@@ -89,7 +95,7 @@ function GameBoard() {
           return;
         }
         const newGameState = [...gameState];
-        const answer = solutionWordList[startTime % solutionWordList.length];
+        const answer = window.atob(currentSolution);
         const result = makeGuess(guess, answer);
         newGameState[turn] = result;
         setGameState(newGameState);
@@ -114,6 +120,12 @@ function GameBoard() {
         setActiveColumn(Math.min(activeColumn + 1, WORD_LENGTH - 1));
         setGameState(newGameState);
       }
+      if (key === "ArrowRight") {
+        setActiveColumn(Math.min(activeColumn + 1, WORD_LENGTH - 1));
+      }
+      if (key === "ArrowLeft") {
+        setActiveColumn(Math.max(activeColumn - 1, 0));
+      }
     },
     [gameOver, gameState, activeColumn, turn]
   );
@@ -128,7 +140,12 @@ function GameBoard() {
       {gameState.map((row, i) => (
         <div className="GameBoard-row" key={i}>
           {row.map(({ value, matchType }, j) => (
-            <LetterInput matchType={matchType} key={`R${i}C${j}`}>
+            <LetterInput
+              matchType={matchType}
+              selected={turn === i && activeColumn === j}
+              key={`R${i}C${j}`}
+              onClick={() => handleClickInput([i, j])}
+            >
               {value}
             </LetterInput>
           ))}
