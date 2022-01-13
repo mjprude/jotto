@@ -157,6 +157,14 @@ function Game() {
     handleKeydown({ key });
   };
 
+  const handleInputClick = (row, column) => {
+    console.log(row, column);
+    if (row !== turn) {
+      return;
+    }
+    setActiveColumn(column);
+  };
+
   return (
     <div className="Game">
       <div className="Game-board">
@@ -167,6 +175,7 @@ function Game() {
                 matchType={matchType}
                 selected={turn === i && activeColumn === j}
                 key={`R${i}C${j}`}
+                onClick={() => handleInputClick(i, j)}
               >
                 {value}
               </LetterInput>
