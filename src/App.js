@@ -1,11 +1,11 @@
 import "./App.css";
-import GameBoard from "./GameBoard";
+import Game from "./Game";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">JOTTO</header>
-      <GameBoard />
+      <Game />
     </div>
   );
 }

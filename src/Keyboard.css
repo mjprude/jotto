@@ -1,0 +1,52 @@
+.Keyboard {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.Keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  max-width: 100vh;
+}
+
+.Keyboard-row-1 {
+  margin: 0 5%;
+}
+.Keyboard-row-2 .Keyboard-key:first-child,
+.Keyboard-row-2 .Keyboard-key:last-child {
+  min-width: 14%;
+}
+
+.Keyboard-key {
+  border: 0;
+  border-radius: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-align: center;
+  height: var(--key-height);
+  background-color: #616161;
+  color: #ededed;
+  flex: 1;
+}
+
+.Keyboard-key-in-position {
+  background-color: #538d4e;
+}
+
+.Keyboard-key-in-word {
+  background-color: #b59f3b;
+}
+
+.Keyboard-key-incorrect {
+  background-color: #3a3a3c;
+}

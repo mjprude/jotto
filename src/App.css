@@ -1,19 +1,13 @@
+:root {
+  --header-height: calc(3rem + 1px);
+  --key-height: 7vh;
+  --keyboard-height: calc(3 * 7vh + 40px);
+}
+
 .App {
   text-align: center;
   background-color: #121213;
   min-height: 100vh;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-  font-size: 16px;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {

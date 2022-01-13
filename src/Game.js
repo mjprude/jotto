@@ -1,6 +1,7 @@
 import { useMemo, useCallback, useEffect, useState } from "react";
-import "./GameBoard.css";
+import "./Game.css";
 import LetterInput from "./LetterInput";
+import Keyboard from "./Keyboard";
 import completeWordList from "./complete-word-list";
 import solutionWordList from "./solution-word-list";
 
@@ -42,16 +43,17 @@ const makeGuess = (guess, answer) => {
   });
 };
 
-function GameBoard() {
+function Game() {
   const [gameOver, setGameOver] = useState(false);
   const [turn, setTurn] = useState(0);
   const [activeColumn, setActiveColumn] = useState(0);
 
-  const startTime = useMemo(() => Date.now(), [gameOver]);
   const emptyBoard = [...Array(MAX_GUESSES)].map(() =>
     [...Array(WORD_LENGTH)].map(() => ({ value: "" }))
   );
   const [gameState, setGameState] = useState(emptyBoard);
+  const startTime = useMemo(() => Date.now(), [gameOver]);
+
   const validateGuess = (guess) => {
     if (guess.length !== WORD_LENGTH) {
       return [false, "Not enough letters"];
@@ -60,6 +62,23 @@ function GameBoard() {
       return [false, "Not in word list"];
     }
     return [true, ""];
+  };
+
+  const guessedLetters = () => {
+    const { inPosition, inWord, incorrect } = MATCH_TYPES;
+    return gameState.flat().reduce((obj, { value, matchType }) => {
+      if (!value) {
+        return obj;
+      }
+      const existingMatch = obj[value];
+      if (existingMatch === inPosition || matchType === inPosition) {
+        return { ...obj, [value]: inPosition };
+      }
+      if (existingMatch === inWord || matchType === inWord) {
+        return { ...obj, [value]: inWord };
+      }
+      return { ...obj, [value]: incorrect };
+    }, {});
   };
 
   const currentSolution = useMemo(
@@ -77,7 +96,7 @@ function GameBoard() {
         const letterUnderCursor = gameState[turn][activeColumn].value;
         const columnToDelete = letterUnderCursor
           ? activeColumn
-          : activeColumn - 1;
+          : Math.max(activeColumn - 1, 0);
         newGameState[turn][columnToDelete].value = "";
         setGameState(newGameState);
         if (!letterUnderCursor) {
@@ -134,23 +153,33 @@ function GameBoard() {
     return () => window.removeEventListener("keydown", handleKeydown);
   }, [handleKeydown]);
 
+  const handleOnScreenKeyPress = (key) => {
+    handleKeydown({ key });
+  };
+
   return (
-    <div className="GameBoard">
-      {gameState.map((row, i) => (
-        <div className="GameBoard-row" key={i}>
-          {row.map(({ value, matchType }, j) => (
-            <LetterInput
-              matchType={matchType}
-              selected={turn === i && activeColumn === j}
-              key={`R${i}C${j}`}
-            >
-              {value}
-            </LetterInput>
-          ))}
-        </div>
-      ))}
+    <div className="Game">
+      <div className="Game-board">
+        {gameState.map((row, i) => (
+          <div className="Game-board-row" key={i}>
+            {row.map(({ value, matchType }, j) => (
+              <LetterInput
+                matchType={matchType}
+                selected={turn === i && activeColumn === j}
+                key={`R${i}C${j}`}
+              >
+                {value}
+              </LetterInput>
+            ))}
+          </div>
+        ))}
+      </div>
+      <Keyboard
+        guessedLetters={guessedLetters()}
+        handleClick={handleOnScreenKeyPress}
+      />
     </div>
   );
 }
 
-export default GameBoard;
+export default Game;
