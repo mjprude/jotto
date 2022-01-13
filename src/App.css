@@ -2,12 +2,20 @@
   --header-height: calc(3rem + 1px);
   --key-height: 7vh;
   --keyboard-height: calc(3 * 7vh + 40px);
+  --full-height: 100vh;
+}
+
+@supports (-webkit-touch-callout: none) {
+  :root {
+    --full-height: -webkit-fill-available;
+  }
 }
 
 .App {
   text-align: center;
   background-color: #121213;
-  min-height: 100vh;
+  min-height: var(--full-height);
+  position: relative;
 }
 
 .App-header {

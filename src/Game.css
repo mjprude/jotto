@@ -6,7 +6,7 @@
   box-sizing: border-box;
   width: min(
     calc(
-      (100vh - 20px - var(--header-height) - var(--keyboard-height)) * 5 / 6
+      (100vh - 90px - var(--header-height) - var(--keyboard-height)) * 5 / 6
     ),
     calc(100% - 20px)
   );

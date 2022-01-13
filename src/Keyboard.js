@@ -54,7 +54,7 @@ const Keyboard = (props) => {
               onClick={() => handleClick(letter.value)}
               className={toButtonClass(letter.value)}
             >
-              {letter.display}
+              <p>{letter.display}</p>
             </button>
           ))}
         </div>
