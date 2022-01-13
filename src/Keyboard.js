@@ -49,13 +49,13 @@ const Keyboard = (props) => {
       {keyRows.map((row, i) => (
         <div key={i} className={`Keyboard-row Keyboard-row-${i}`}>
           {row.map((letter) => (
-            <button
+            <div
               key={letter.value}
               onClick={() => handleClick(letter.value)}
               className={toButtonClass(letter.value)}
             >
               <p>{letter.display}</p>
-            </button>
+            </div>
           ))}
         </div>
       ))}

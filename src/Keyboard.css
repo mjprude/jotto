@@ -23,15 +23,14 @@
 }
 .Keyboard-row-2 .Keyboard-key:first-child,
 .Keyboard-row-2 .Keyboard-key:last-child {
-  min-width: 7vw;
+  min-width: 14%;
 }
 
 .Keyboard-key {
-  border: 0;
   border-radius: 0.35rem;
-  font-size: 0.85rem;
+  font-size: 1rem;
+  line-height: 1rem;
   font-weight: bold;
-  text-align: center;
   height: var(--key-height);
   background-color: #616161;
   color: #ededed;
@@ -42,12 +41,18 @@
   position: relative;
 }
 
+@media (max-width: 400px) {
+  .Keyboard-key {
+    font-weight: normal;
+  }
+}
+
 .Keyboard-key > p {
   position: absolute;
   left: 0;
   right: 0;
   margin: auto auto;
-  top: calc(50% - 0.85rem / 2);
+  top: calc(50% - 1rem / 2);
 }
 
 .Keyboard-key-in-position {
