@@ -1,4 +1,4 @@
-@keyframes PopIn {
+/* @keyframes PopIn {
   from {
     transform: scale(0.8);
     opacity: 0;
@@ -8,7 +8,7 @@
     transform: scale(1.1);
     opacity: 1;
   }
-}
+} */
 
 .LetterInput {
   border: 3px solid #3a3a3c;
@@ -34,7 +34,7 @@
 }
 
 .LetterInput.filled {
-  animation: PopIn 100ms;
+  /* animation: PopIn 100ms; */
   border-color: #565758;
 }
 
