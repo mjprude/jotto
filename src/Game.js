@@ -1,6 +1,7 @@
 import { useMemo, useCallback, useEffect, useState } from "react";
 import "./Game.css";
 import LetterInput from "./LetterInput";
+import Snackbar from "./Snackbar";
 import Keyboard from "./Keyboard";
 import completeWordList from "./complete-word-list";
 import solutionWordList from "./solution-word-list";
@@ -47,6 +48,7 @@ function Game() {
   const [gameOver, setGameOver] = useState(false);
   const [turn, setTurn] = useState(0);
   const [activeColumn, setActiveColumn] = useState(0);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const emptyBoard = [...Array(MAX_GUESSES)].map(() =>
     [...Array(WORD_LENGTH)].map(() => ({ value: "" }))
@@ -104,12 +106,11 @@ function Game() {
         }
       }
       if (key === "Enter") {
-        // submit stuff
+        setSnackbarMessage("");
         const guess = toWord(gameState[turn]);
         const [isValid, errorMessage] = validateGuess(guess);
         if (!isValid) {
-          console.error(errorMessage);
-          // display!
+          setSnackbarMessage(errorMessage);
           return;
         }
         const newGameState = [...gameState];
@@ -121,12 +122,11 @@ function Game() {
           result.every(({ matchType }) => matchType === MATCH_TYPES.inPosition)
         ) {
           setGameOver(true);
-          setTimeout(() => alert("YOU WIN!", answer), 500);
           return;
         }
         if (turn === MAX_GUESSES - 1) {
           setGameOver(true);
-          setTimeout(() => alert("YOU LOSE!", answer), 500);
+          setSnackbarMessage(answer.toUpperCase());
           return;
         }
         setActiveColumn(0);
@@ -167,6 +167,7 @@ function Game() {
 
   return (
     <div className="Game">
+      <Snackbar message={snackbarMessage} flash={!gameOver} />
       <div className="Game-board">
         {gameState.map((row, i) => (
           <div className="Game-board-row" key={i}>
