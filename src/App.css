@@ -29,16 +29,3 @@
   letter-spacing: 0.2rem;
   border-bottom: 1px solid #3a3a3c;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
